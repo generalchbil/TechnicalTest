@@ -7,30 +7,39 @@ Class convertStringToAscii
 {
     public $arrayOfString =[];
 
-
+    /**
+     * convertStringToAscii constructor.
+     */
     function __construct()
     {
         global $argv;
-        if(isset($argv[1]) && strlen($argv[1]) && preg_match('/^[A-Z0-9 .\-]+$/i', $argv[1])) {
+
+        if(isset($argv[1]) && strlen($argv[1]) && preg_match('/^[A-Z0-9]+$/', $argv[1])) {
             $this->arrayOfString = str_split($argv[1]);
         }else {
-            echo 'Please Specify a String';
+            echo "Please Specify a String : Only uppercase letters and numbers will be implemented \n";
             exit(1);
         }
     }
 
+    /**
+     * @return array
+     */
     public function transformletterToMAtrice() {
 
         $displaystring = [];
         $matrice = new Matrice();
 
         for($i = 0 ;$i < count($this->arrayOfString);$i++) {
+
             $current_letter = $this->arrayOfString[$i];
             $matricelet = $matrice->matrice_letters[$current_letter];
+
             foreach ($matricelet as $key => $line) {
-                if(isset($displaystring[$key])){
+
+                if(isset($displaystring[$key])) {
                     $displaystring[$key] = array_merge($displaystring[$key],$line);
-                }else {
+                } else {
                     $displaystring[$key] = $line;
                 }
 
@@ -40,13 +49,20 @@ Class convertStringToAscii
         return $displaystring;
     }
 
+    /**
+     * Display Matrices
+     */
     public function display() {
+
         $transform_string = $this->transformletterToMAtrice();
+
         foreach ($transform_string as $keyline => $line) {
+
             foreach ($line as $keuColumn => $column) {
-                if($column == 1){
+
+                if($column == 1) {
                     echo '#';
-                }else {
+                } else {
                     echo ' ';
                 }
             }
